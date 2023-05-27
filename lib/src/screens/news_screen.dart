@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/src/constant.dart' as constant;
 import 'package:todoapp/src/services/api_services.dart';
 
 class NewsPage extends StatefulWidget {
@@ -9,6 +10,7 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,7 @@ class _NewsPageState extends State<NewsPage> {
                       return SizedBox(
                         child: ListBody(
                           children: [
-                            Image.network(news["thumbnail"]),
+                            Image.network(constant.Constants.apiUrl + news["thumbnail"]),
                             Text(
                               news["metadata"]["title"],
                               style: const TextStyle(
