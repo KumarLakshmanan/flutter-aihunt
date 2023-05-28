@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todoapp/src/screens/news_screen.dart';
 import 'package:todoapp/src/screens/tools_screen.dart';
 
@@ -11,9 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: RootPage(),
+    return MaterialApp(
+      home: const RootPage(),
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          textTheme: TextTheme(
+              bodyMedium: TextStyle(
+                  fontFamily: GoogleFonts.abel().fontFamily,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black45),
+              bodyLarge: TextStyle(
+                  fontFamily: GoogleFonts.righteous().fontFamily,
+                  fontSize: 22,
+                  color: Colors.blueAccent[100]))),
     );
   }
 }
@@ -52,7 +63,7 @@ class _RootPageState extends State<RootPage> {
       ),
       body: pages[activeindex]["widget"],
       bottomNavigationBar: SizedBox(
-        height: 140,
+        height: 80,
         child: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
@@ -64,7 +75,7 @@ class _RootPageState extends State<RootPage> {
               label: "NEWS",
             ),
           ],
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.grey[900],
           unselectedItemColor: Colors.white,
           currentIndex: activeindex,
           onTap: (value) => {

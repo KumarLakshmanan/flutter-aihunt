@@ -1,0 +1,14 @@
+Categories Fetch API
+http://api.frontendforever.com/ai/api.php?mode=categories
+
+Search AI Tools
+http://api.frontendforever.com/ai/api.php?mode=fetch&start=0&limit=10&category=3d,art
+
+Get single AI Details
+http://api.frontendforever.com/ai/api.php?mode=singlefetch&id=sivi.ai
+
+Get AI News
+http://api.frontendforever.com/ai/api.php?mode=news&start=0&limit=10
+
+Figma
+https://www.figma.com/file/BCCcaNDk6Iy1ioNbEBxYqn/AI-Tools?type=design&t=yCmqHhNf2kyljERg-6
