@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:todoapp/src/constant.dart';
+import 'package:aihunt/src/constant.dart';
 
 final dio = Dio();
 

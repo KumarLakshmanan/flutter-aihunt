@@ -1,90 +1,115 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todoapp/src/screens/news_screen.dart';
-import 'package:todoapp/src/screens/tools_screen.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:aihunt/controller/ad_controller.dart';
+import 'package:aihunt/controller/notification.dart';
+import 'package:aihunt/function.dart';
+import 'package:aihunt/src/constant.dart';
+import 'package:aihunt/src/screens/splash_screen.dart';
 
-void main() {
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  await setupFlutterNotifications();
+  await NotificationService().showNotify(body: message.data);
+}
+
+late AndroidNotificationChannel channel;
+
+bool isFlutterLocalNotificationsInitialized = false;
+
+Future<void> setupFlutterNotifications() async {
+  if (isFlutterLocalNotificationsInitialized) {
+    return;
+  }
+  channel = const AndroidNotificationChannel(
+    'velscvp',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.',
+    importance: Importance.high,
+  );
+
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  flutterLocalNotificationsPlugin.initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+    ),
+    onDidReceiveNotificationResponse: (details) {},
+  );
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+  isFlutterLocalNotificationsInitialized = true;
+}
+
+late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+            alert: true, badge: true, sound: true);
+    await setupFlutterNotifications();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      if (kDebugMode) {
+        print("onMessage: ${message.toString()}");
+      }
+      await NotificationService().showNotify(
+        body: message.data,
+      );
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (kDebugMode) {
+        print('A new onMessageOpenedApp event was published!');
+      }
+    });
+    await MobileAds.instance.initialize();
+  }
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const RootPage(),
+    Get.put(AdController());
+    return GetMaterialApp(
+      title: 'AI Hunt',
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
-          textTheme: TextTheme(
-              bodyMedium: TextStyle(
-                  fontFamily: GoogleFonts.abel().fontFamily,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black45),
-              bodyLarge: TextStyle(
-                  fontFamily: GoogleFonts.righteous().fontFamily,
-                  fontSize: 22,
-                  color: Colors.blueAccent[100]))),
-    );
-  }
-}
-
-class RootPage extends StatefulWidget {
-  const RootPage({super.key});
-
-  @override
-  State<RootPage> createState() => _RootPageState();
-}
-
-class _RootPageState extends State<RootPage> {
-  int activeindex = 0;
-  List<Map<String, dynamic>> pages = [
-    {
-      "label": "AI TOOLS",
-      "widget": const ToolsPage(),
-    },
-    {
-      "label": "AI NEWS",
-      "widget": const NewsPage(),
-    }
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          pages[activeindex]["label"],
-          style: const TextStyle(
-              color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            fontFamily: GoogleFonts.abel().fontFamily,
+            fontWeight: FontWeight.normal,
+            color: Colors.black45,
+          ),
+          bodyLarge: TextStyle(
+            fontFamily: GoogleFonts.righteous().fontFamily,
+            fontSize: 22,
+            color: Constants.primaryColor,
+          ),
         ),
+        primaryColor: Constants.primaryColor,
+        fontFamily: GoogleFonts.lato().fontFamily,
+        primarySwatch: createMaterialColor(Constants.primaryColor),
       ),
-      body: pages[activeindex]["widget"],
-      bottomNavigationBar: SizedBox(
-        height: 80,
-        child: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.store),
-              label: "TOOLS",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.campaign),
-              label: "NEWS",
-            ),
-          ],
-          backgroundColor: Colors.grey[900],
-          unselectedItemColor: Colors.white,
-          currentIndex: activeindex,
-          onTap: (value) => {
-            setState(() {
-              activeindex = value;
-            })
-          },
-        ),
-      ),
+      home: const SplashScreen(),
     );
   }
 }

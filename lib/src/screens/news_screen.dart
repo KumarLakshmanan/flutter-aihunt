@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/src/services/api_services.dart';
+import 'package:aihunt/src/services/api_services.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
