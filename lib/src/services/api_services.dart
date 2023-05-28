@@ -14,4 +14,14 @@ class ApiServices {
 
     return <String, dynamic>{};
   }
+
+  Future<Map<String, dynamic>> getTools() async {
+    var response = await dio.get(Constants.toolsUrl);
+
+    if (response.statusCode == 200) {
+      return response.data;
+    }
+
+    return <String, dynamic>{};
+  }
 }

@@ -90,8 +90,7 @@ class _NewsPageState extends State<NewsPage> {
                                     ),
                                     Text(
                                         style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black87),
+                                            fontSize: 18, color: Colors.black),
                                         DateTime.fromMicrosecondsSinceEpoch(
                                                 news['datetime'])
                                             .toString()
