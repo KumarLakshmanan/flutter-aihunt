@@ -36,18 +36,24 @@ class _SearchBoxState extends State<SearchBox> {
         child: Row(
           children: [
             const SizedBox(width: 10),
-            Icon(
-              Icons.search,
-              color: Colors.white.withOpacity(0.6),
+            GestureDetector(
+              onTap: () {
+                widget.onChanged(widget.controller.text);
+              },
+              child: Icon(
+                Icons.search,
+                color: Colors.white.withOpacity(0.6),
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 focusNode: widget.searchFocusNode,
                 controller: widget.controller,
-                onChanged: (value) {
+                onSubmitted: (value) {
                   widget.onChanged(value);
                 },
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintStyle: TextStyle(

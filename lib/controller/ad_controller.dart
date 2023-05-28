@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AdHelper {
   static String get appOpenAds {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-1100799750663761/3675802697';
+      return 'ca-app-pub-1100799750663761/2967227813';
     } else if (Platform.isIOS) {
       return '<YOUR_IOS_BANNER_AD_UNIT_ID>';
     } else {
@@ -19,7 +19,7 @@ class AdHelper {
 
   static String get rewaredInterstital {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-1100799750663761/8732688254';
+      return 'ca-app-pub-1100799750663761/1263263903';
     } else if (Platform.isIOS) {
       return '<YOUR_IOS_BANNER_AD_UNIT_ID>';
     } else {
@@ -29,7 +29,7 @@ class AdHelper {
 
   static String get interstitialAds {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-1100799750663761/6685109419';
+      return 'ca-app-pub-1100799750663761/3745957011';
     } else if (Platform.isIOS) {
       return '<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>';
     } else {
@@ -39,7 +39,7 @@ class AdHelper {
 
   static String get bannerAds {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-1100799750663761/5479876942';
+      return 'ca-app-pub-1100799750663761/6372120357';
     } else if (Platform.isIOS) {
       return '<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>';
     } else {

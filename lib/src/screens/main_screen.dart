@@ -1,5 +1,8 @@
+import 'package:aihunt/controller/ad_controller.dart';
 import 'package:aihunt/src/helpers/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:in_app_review/in_app_review.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:aihunt/function.dart';
@@ -17,6 +20,8 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int activeindex = 0;
   final pageController = PageController();
+  AppOpenAd? _appOpenAd;
+
   final InAppReview inAppReview = InAppReview.instance;
   init() async {
     getAndroidRegId();
@@ -28,6 +33,26 @@ class _RootPageState extends State<RootPage> {
     if (await inAppReview.isAvailable()) {
       inAppReview.requestReview();
     }
+    AppOpenAd.load(
+      adUnitId: AdHelper.appOpenAds,
+      orientation: AppOpenAd.orientationPortrait,
+      request: const AdRequest(),
+      adLoadCallback: AppOpenAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              _appOpenAd = null;
+            },
+          );
+          _appOpenAd = ad;
+          _appOpenAd!.show();
+        },
+        onAdFailedToLoad: (error) {
+          print('AppOpenAd failed to load: $error');
+          // Handle the error.
+        },
+      ),
+    );
   }
 
   @override
@@ -42,9 +67,6 @@ class _RootPageState extends State<RootPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // bottom: activeindex == 0
-        //     ?
-        //     : null,
       ),
       drawer: const RootDrawer(),
       body: PageView(

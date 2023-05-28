@@ -159,25 +159,25 @@ class _FilterByState extends State<FilterBy> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 35,
+      height: 30,
       child: Row(
         children: [
+          Container(
+            padding: const EdgeInsets.all(6.0),
+            child: const Text(
+              "Filter By: ",
+              style: TextStyle(
+                letterSpacing: 1,
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           Expanded(
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(6.0),
-                  child: const Text(
-                    "Filter By: ",
-                    style: TextStyle(
-                      letterSpacing: 1,
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
                 for (var i = 0; i < categories.length; i++)
                   GestureDetector(
                     onTap: () {
@@ -197,14 +197,15 @@ class _FilterByState extends State<FilterBy> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       padding: const EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                        top: 6,
-                        bottom: 6,
+                        left: 10.0,
+                        right: 10.0,
+                        top: 2,
+                        bottom: 2,
                       ),
+                      alignment: Alignment.center,
                       margin: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 8.0,
+                        left: 4.0,
+                        right: 4.0,
                       ),
                       child: Text(
                         categories[i]["_id"].toString().toUpperCase(),

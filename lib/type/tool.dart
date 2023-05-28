@@ -40,7 +40,9 @@ class AiToolType {
         pricing: Pricing.fromJson(json["pricing"]),
         video: json["video"] ?? "",
         priority: json["priority"] ?? "",
-        gpt33: Gpt33.fromJson(json["gpt33"]),
+        gpt33: json["gpt33"].runtimeType != Map
+            ? Gpt33(heading: "No Description Provided")
+            : Gpt33.fromJson(json["gpt33"]),
       );
 
   Map<String, dynamic> toJson() => {
