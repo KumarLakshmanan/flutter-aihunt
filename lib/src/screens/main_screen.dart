@@ -16,19 +16,8 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int activeindex = 0;
+  final pageController = PageController();
   final InAppReview inAppReview = InAppReview.instance;
-
-  List<Map<String, dynamic>> pages = [
-    {
-      "label": "AI TOOLS",
-      "widget": const ToolsPage(),
-    },
-    {
-      "label": "AI NEWS",
-      "widget": const NewsPage(),
-    }
-  ];
-
   init() async {
     getAndroidRegId();
     InAppUpdate.checkForUpdate().then((value) {
@@ -47,16 +36,30 @@ class _RootPageState extends State<RootPage> {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          pages[activeindex]["label"],
+          activeindex == 0 ? "AI TOOLS" : "AI NEWS",
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
+        // bottom: activeindex == 0
+        //     ?
+        //     : null,
       ),
-      drawer: RootDrawer(),
-      body: pages[activeindex]["widget"],
+      drawer: const RootDrawer(),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: pageController,
+        children: const [
+          ToolsPage(),
+          NewsPage(),
+        ],
+        onPageChanged: (value) => {
+          setState(() {
+            activeindex = value;
+          })
+        },
+      ),
       bottomNavigationBar: SizedBox(
         height: 70,
         child: BottomNavigationBar(
@@ -75,6 +78,11 @@ class _RootPageState extends State<RootPage> {
           selectedItemColor: Colors.white,
           currentIndex: activeindex,
           onTap: (value) => {
+            pageController.animateToPage(
+              value,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.ease,
+            ),
             setState(() {
               activeindex = value;
             })

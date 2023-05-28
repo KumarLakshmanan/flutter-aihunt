@@ -145,3 +145,7 @@ snackbar(String title, String message, {bool success = false}) {
     margin: const EdgeInsets.all(0),
   );
 }
+
+replaceStringForThumb(String stf) {
+  return stf.replaceAll(" ", "-").replaceAll("/", "-");
+}
