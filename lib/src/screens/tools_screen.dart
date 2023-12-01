@@ -1,4 +1,3 @@
-import 'package:aihunt/function.dart';
 import 'package:aihunt/shimmer/news_shimmer.dart';
 import 'package:aihunt/src/constant.dart';
 import 'package:aihunt/src/helpers/filter_by.dart';
@@ -35,8 +34,6 @@ class _ToolsPageState extends State<ToolsPage>
     var response = await dio.get(
       "${Constants.apiUrl}=fetch&start=${tools.length}&limit=${10}&search=$search&category=$categories",
     );
-    print(
-        "${Constants.apiUrl}=fetch&start=${tools.length}&limit=${10}&search=$search&category=$categories");
     if (response.statusCode == 200) {
       for (var item in response.data["data"]) {
         tools.add(AiToolType.fromJson(item));
@@ -123,7 +120,7 @@ class _ToolsPageState extends State<ToolsPage>
                                   ).replace(
                                     queryParameters: {
                                       'url':
-                                          "/thumbnails/${replaceStringForThumb(tools[idx].id)}.png",
+                                          "/thumbnails/${tools[idx].thumbnail}",
                                       'q': '85',
                                       'w': '1080',
                                     },

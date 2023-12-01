@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 class NewsShimmer extends StatelessWidget {
-  const NewsShimmer({Key? key}) : super(key: key);
+  const NewsShimmer({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +27,7 @@ class NewsShimmer extends StatelessWidget {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(6),
                     ),
                     color: Colors.grey.shade100,
@@ -45,7 +45,7 @@ class NewsShimmer extends StatelessWidget {
                           width: 50,
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(6),
                             ),
                           ),
@@ -61,12 +61,12 @@ class NewsShimmer extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(6),
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 4,
                               ),
                               Container(
@@ -74,7 +74,7 @@ class NewsShimmer extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(6),
                                   ),
                                 ),

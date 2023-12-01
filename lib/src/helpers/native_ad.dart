@@ -20,13 +20,11 @@ class _AdMobNativeState extends State<AdMobNative> {
       adUnitId: _adUnitId,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          print('$NativeAd loaded.');
           setState(() {
             _nativeAdIsLoaded = true;
           });
         },
         onAdFailedToLoad: (ad, error) {
-          print('$NativeAd failed to load: $error');
           ad.dispose();
         },
       ),

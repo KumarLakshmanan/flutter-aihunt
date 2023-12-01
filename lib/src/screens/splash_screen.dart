@@ -6,8 +6,8 @@ import 'package:aihunt/src/screens/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }

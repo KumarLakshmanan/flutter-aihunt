@@ -33,8 +33,6 @@ showCallbackDialog(String message, Function onTap,
 }
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message from firebase");
-  print(message.data);
   _messageHandler(message);
 }
 

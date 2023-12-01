@@ -48,7 +48,6 @@ class _RootPageState extends State<RootPage> {
           _appOpenAd!.show();
         },
         onAdFailedToLoad: (error) {
-          print('AppOpenAd failed to load: $error');
           // Handle the error.
         },
       ),

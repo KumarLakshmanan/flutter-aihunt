@@ -55,7 +55,6 @@ class AdController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       int adUnitId = prefs.getInt("showedInterstitialAds") ?? 0;
       bool isPro = prefs.getBool("isPro") ?? false;
-      print("You are Pro: $isPro");
       if (adUnitId == 0) {
         if (!isPro) {
           InterstitialAd.load(
@@ -117,7 +116,6 @@ class AppOpenAdManager {
           _appOpenAd = ad;
         },
         onAdFailedToLoad: (error) {
-          print('AppOpenAd failed to load: $error');
           // Handle the error.
         },
       ),
@@ -126,16 +124,13 @@ class AppOpenAdManager {
 
   void showAdIfAvailable() {
     if (!isAdAvailable) {
-      print('Tried to show ad before available.');
       loadAd();
       return;
     }
     if (_isShowingAd) {
-      print('Tried to show ad while already showing an ad.');
       return;
     }
     if (DateTime.now().subtract(maxCacheDuration).isAfter(_appOpenLoadTime!)) {
-      print('Maximum cache duration exceeded. Loading another ad.');
       _appOpenAd!.dispose();
       _appOpenAd = null;
       loadAd();

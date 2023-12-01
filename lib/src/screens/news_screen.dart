@@ -172,8 +172,8 @@ class _NewsPageState extends State<NewsPage>
                                         ).replace(
                                           queryParameters: {
                                             'url': news[idx].icon,
-                                            'q': '60',
-                                            'w': '1080',
+                                            'q': '32',
+                                            'w': '32',
                                           },
                                         ).toString(),
                                       ),
